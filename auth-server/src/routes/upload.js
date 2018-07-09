@@ -11,10 +11,11 @@ const upload = multer({dest: `${__dirname}/../tmp`});
 const uploadRouter = express.Router();
 
 uploadRouter.post('/upload', auth, upload.any(), (req, res, next) => {
-
+  console.log('did i get here!');
   if(!req.body.title || req.files.length > 1 || req.files[0].fieldname !== 'img')
     return next('title or sample was not provided');
-
+  req.files;
+  req.body;
   let file = req.files[0];
   let key = `${file.filename}.${file.originalname}`;
 
@@ -23,6 +24,7 @@ uploadRouter.post('/upload', auth, upload.any(), (req, res, next) => {
   console.log(key);
 
   return s3.upload(file.path, key)
+    .then(console.log('did i get here to s3?'))
     .then(url => {
       let output = {
         url: url,
@@ -31,7 +33,7 @@ uploadRouter.post('/upload', auth, upload.any(), (req, res, next) => {
     })
     .catch(next);
 
-  res.sendStatus(418);
+//   //res.sendStatus(418);
   
 });
 
