@@ -10,7 +10,7 @@ import superagent from 'superagent';
 let instagramURL = 'https://api.instagram.com/oauth/authorize/';
 
 let options = {
-  client_id:'f6fe9347cc7b4e51a141127857b8ca42',
+  client_id:'7897c5e806484bd686ffa6a6670b043d',
   redirect_uri: 'http://localhost:3000/oauth',
   // scope: 'full_name openid profile',
   // prompt: 'consent',
@@ -35,7 +35,7 @@ describe('/upload', () => {
     mongoose.connection.close();
   });
 
-  xit('POST /upload  200', () => {
+  it('POST /upload  200', () => {
     return request.get('/login')
       .auth('john','john')
       .then(response => {
@@ -49,7 +49,7 @@ describe('/upload', () => {
           });
       });
   });
-  it('POST /upload to AWS', () => {
+  xit('POST /upload to AWS', () => {
 
     return superagent.post(authURL)
       .send({

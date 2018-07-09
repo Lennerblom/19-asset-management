@@ -7,8 +7,8 @@
     "db": "mongod --dbpath=/Users/john/codefellows/tmp/db",
     "start": "node index.js",
     "watch": "nodemon index.js",
-    "test-watch": "jest --watchAll",
-    "test": "jest",
+    "test-watch": "jest --watchAll --forceExit",
+    "test": "jest --forceExit",
     "lint": "eslint **/*.js"
   },
   "keywords": [],
