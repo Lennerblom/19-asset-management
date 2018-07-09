@@ -77,7 +77,6 @@ export default (req, res, next) => {
       authenticate(auth);
     }
     else if(authHeader.match(/bearer/i)) {
-      console.log('testing here for bearer token');
       // i.e. Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI
       let token = authHeader.replace(/bearer\s+/i, '');
       authorize(token);
