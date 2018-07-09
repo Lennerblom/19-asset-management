@@ -30,11 +30,11 @@ const authorize = (req) => {
     .then(response => {
       let instagramToken = response.body.access_token;
       console.log('(2) instagram token', instagramToken);
-      console.log('(4) Creating Account');
+      console.log('(3) Creating Account');
       return User.createFromOAuth(response.body.user);
     })
     .then (user => {
-      console.log('(5) Created User, generating token');
+      console.log('(4) Created User, generating token');
       return user.generateToken();
     })
     .catch(error=>error);

@@ -3,8 +3,9 @@
 import User from './model.js';
 
 export default (req, res, next) => {
-
+  //console.log('authheader', req.headers.authorization);
   let authorize = (token) => {
+    console.log('reached authorize');
     // Given a token, check with the User model to see if its valid
     User.authorize(token)
       .then(user => {
@@ -21,6 +22,7 @@ export default (req, res, next) => {
   };
 
   let authenticate = (auth) => {
+    console.log('testing here for authentication');
     // Validate the user using the model's authenticate method
     User.authenticate(auth)
     // We will always get back a "user" from mongo ... although it might be real and it might be null
@@ -41,6 +43,7 @@ export default (req, res, next) => {
 
   // If we're not authenticated either show an error or pop a window
   let getAuth = () => {
+    console.log('testing here for 401');
     // res.set({
     //   'WWW-Authenticate': 'Basic realm="Super Secret Area"'
     // }).send(401);
@@ -62,7 +65,7 @@ export default (req, res, next) => {
     if(authHeader.match(/basic/i)) {
       // authHeader will have a base64 encoded auth string in it
       //   i.e. Basic ZnJlZDpzYW1wbGU=
-
+      
       // Break that apart ...
       let base64Header = authHeader.replace(/Basic\s+/i, ''); // ZnJlZDpzYW1wbGU=
       let base64Buffer = Buffer.from(base64Header,'base64'); // <Buffer 01 02...>
