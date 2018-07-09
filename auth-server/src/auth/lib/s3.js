@@ -7,7 +7,7 @@ const s3 = new aws.S3();
 // resolve a url
 
 const upload = (path, key) => {
-
+    
   let config = {
     Bucket: process.env.AWS_BUCKET,
     Key: key,

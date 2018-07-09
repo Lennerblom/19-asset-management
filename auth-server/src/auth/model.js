@@ -1,13 +1,15 @@
 'use strict';
 
-import mongoose from 'mongoose';
+import mongoose,{Schema} from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import Profile from './profiles.js';
 
 const userSchema = new mongoose.Schema({
   username: {type: String, required: true, unique: true},
   password: {type: String, required: true},
   full_name: {type: String, required: true},
+  profiles:{type:Schema.Types.ObjectId, ref: 'profiles'},
 });
 
 // Before we save, hash the plain text password
@@ -57,7 +59,11 @@ userSchema.statics.createFromOAuth = function(incoming) {
         username: username,
         password: password,
         full_name:incoming.full_name,
-      });
+      }).then(user=>Profile.create({
+        userID: user._id,
+        username: username,
+        fullName : incoming.full_name,
+      }));
     });
 
 };
@@ -72,6 +78,7 @@ userSchema.statics.authenticate = function(auth) {
 };
 
 userSchema.statics.authorize = function(token) {
+  console.log('auth',token);
   let parsedToken = jwt.verify(token, process.env.SECRET || 'changeit');
   let query = {_id:parsedToken.id};
   return this.findOne(query)
